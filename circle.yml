@@ -30,7 +30,7 @@ dependencies:
 
 deployment:
   develop:
-      branch: develop
+      branch: master
       commands:
         - gradle build
         - gradle uploadArchives
