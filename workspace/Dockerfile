@@ -7,7 +7,7 @@ WORKDIR /usr/local/hello
 ADD build/libs/*.jar /usr/local/hello/hello.jar
 ADD build/libs/lib/*.jar /usr/local/hello/lib/
 
-ENV LIMPEI_REST_API_VERSION=1.0.0-SNAPSHOT
+ENV HELLO_REST_API_VERSION=1.0.0-SNAPSHOT
 
 EXPOSE 8080
 

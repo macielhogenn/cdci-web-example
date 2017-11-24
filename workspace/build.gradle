@@ -74,7 +74,7 @@ uploadArchives {
 }
 
 task copyToLib(type: Copy) {
-    into "$buildDir/libs"
+    into "$buildDir/libs/lib"
     from configurations.runtime
 }
 jar.dependsOn(copyToLib)
