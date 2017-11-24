@@ -11,7 +11,6 @@ ENV LIMPEI_REST_API_VERSION=1.0.0-SNAPSHOT
 
 EXPOSE 8080
 
-LABEL "limpei-REST-API"=""
-LABEL description="The LimPei REST API server."
+LABEL description="The Hello REST API server."
 
 CMD ["java", "-jar", "hello.jar"]
