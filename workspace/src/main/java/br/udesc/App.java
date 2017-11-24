@@ -17,6 +17,11 @@ public class App {
         SpringApplication.run(App.class, args);
     }
 
+    @RequestMapping("/")
+    String home() {
+        return "Hello World!";
+    }
+
     @RequestMapping(value = "/ping", consumes = "*/*", produces = "text/plain")
     public String ping(){
         return "OK";
