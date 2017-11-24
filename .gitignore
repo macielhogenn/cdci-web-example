@@ -1,0 +1,4 @@
+workspace/build
+workspace/.gradle
+workspace/.idea
+workspace/out
