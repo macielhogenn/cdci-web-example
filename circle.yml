@@ -1,0 +1,60 @@
+#https://circleci.com/docs/configuration/
+
+machine:
+  services:
+    - docker
+  java:
+    version: openjdk8
+  environment:
+    IMAGE_NAME: macielhogenn/cdci-web-example
+
+general:
+  build_dir: workspace/
+  branches:
+    ignore:
+      - gh-pages # list of branches to ignore
+    #only:
+    #  - master # list of branches to build
+    #  - /feature-.*/ # or regexes
+
+test:
+#  override:
+#   - ./gradlew test --stacktrace
+  post:
+   - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+   - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+
+dependencies:
+  override:
+    - chmod +x gradlew
+
+deployment:
+  develop:
+      branch: develop
+      commands:
+        - gradle build
+        - gradle uploadArchives
+        - docker info
+        - docker build -t $IMAGE_NAME:master ./
+        - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+        - docker push $IMAGE_NAME
+  release_branches:
+      branch: /[1-9].*/
+      commands:
+        - gradle build
+        - gradle uploadArchives
+        - docker info
+        - docker build -t $IMAGE_NAME:${CIRCLE_BRANCH}.${CIRCLE_BUILD_NUM} ./
+        - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+        - docker push $IMAGE_NAME
+  release_tags:
+      tag: /v.*/
+      commands:
+        - gradle build
+        - gradle uploadArchives
+        - docker info
+        - docker build -t $IMAGE_NAME:$CIRCLE_TAG ./
+        - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+        - docker push $IMAGE_NAME
+
+#    tag: /v[0-9]+(\.[0-9]+)*/
