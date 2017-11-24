@@ -36,4 +36,9 @@ public class App {
         return String.join(" ", "Version", version.toString(), "build", buildNumber.toString());
     }
 
+    @RequestMapping("/mps")
+    String mps() {
+        return "Hello World MPS!";
+    }
+
 }
